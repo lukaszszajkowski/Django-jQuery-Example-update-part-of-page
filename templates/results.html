@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title  %}{{ block.super }}Home Page {% endblock title  %}
+
+{% block content %}
+Base on http://stackoverflow.com/questions/21133135/django-update-part-of-the-page/21134914#21134914 <br>
+
+<h3>Test status</h3>
+<div id="output_box"></div>
+    <h3>Errors</h3>
+<div id="error"></div>
+<script>
+
+$(document).ready(function() {
+  $.ajaxSetup({ cache: false }); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
+  var my_refresh = setInterval(function() {
+    $('#output_box').load('/get_log/', function( response, status, xhr ) {
+      if ( xhr.status == 404) {
+        clearInterval(my_refresh);
+        var msg = "End of testing.";
+        $( "#output_box" ).html( msg);
+      }else if ( status == "error") {
+        clearInterval(my_refresh);
+        var msg = "Sorry but there was an error: [";
+        $( "#error" ).html( msg + xhr.status + "] " + xhr.statusText );
+      }
+
+    });
+  }, 1000); // the "1000"
+
+  $('#form').on('submit', function (e) {
+    e.preventDefault();
+    var my_refresh = start_refreshing_output_box(interval)
+   });
+
+});
+
+</script>
+{% endblock content %}

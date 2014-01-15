@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title  %}{{ block.super }}Home Page {% endblock title  %}
+
+{% block content %}
+
+<form id="form" method="POST" action="/submit/">
+{% csrf_token %}
+<h3>Your code here</h3>
+<textarea name="source_code" cols="40" rows="5" >
+
+</textarea><br>
+<input type="submit" value="Submit" method="submit/">
+</form>
+<h3>Test status</h3>
+
+{% endblock content %}
