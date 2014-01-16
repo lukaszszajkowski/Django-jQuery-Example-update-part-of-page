@@ -29,7 +29,6 @@ def get_log(request):
     return HttpResponse(results)
 
 def results(request):
-    ## Handle POST
     ## Your code comes here
     return render(request, 'results.html', {})
 
